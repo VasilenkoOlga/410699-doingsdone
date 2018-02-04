@@ -96,11 +96,11 @@ $show_complete_tasks = rand(0, 1);
                         <a href="/">
                             <!--добавить сюда аттрибут "checked", если переменная $show_complete_tasks равна единице-->
                             <input class="checkbox__input visually-hidden" type="checkbox" 
-                                   <?PHP
-                                      if ($show_complete_tasks==1)
-                                      echo 'checked';
-                                   ?>
-                                   >
+                                <?php
+                                    if ($show_complete_tasks==1)
+                                    echo 'checked';
+                                ?>
+                            >
                             <span class="checkbox__text">Показывать выполненные</span>
                         </a>
                     </label>
@@ -108,20 +108,21 @@ $show_complete_tasks = rand(0, 1);
 
                 <table class="tasks">
                     <!--показывать следующий тег <tr/>, если переменная $show_complete_tasks равна единице-->
-                    <?php
-                    if ($show_complete_tasks == 1)
-                      echo  "<tr class='tasks__item task task--completed'>
+                    <?php if ($show_complete_tasks == 1): { ?>
+                      <tr class='tasks__item task task--completed'>
                         <td class='task__select'>
-                        <label class='checkbox task__checkbox'>
-                        <input class='checkbox__input visually-hidden' type='checkbox' checked>
-                        <span class='checkbox__text'>Записаться на интенсив 'Базовый PHP'</span>
-                        </label>
+                          <label class='checkbox task__checkbox'>
+                            <input class='checkbox__input visually-hidden' type='checkbox' checked>
+                            <a href="/"><span class='checkbox__text'>Записаться на интенсив 'Базовый PHP'</span></a>
+                          </label>
                         </td>
+                        
                         <td class='task__date'>10.04.2017</td>
+                        
                         <td class='task__controls'>
                         </td>
-                        </tr>";
-                    ?>
+                      </tr>
+                    <?php } endif ?>
                     <tr class="tasks__item task task--completed">
                         <td class="task__select">
                             <label class="checkbox task__checkbox">
