@@ -165,7 +165,7 @@ $task_table = [
                       <tr class='tasks__item task <?= ($value['realization']==1) ? "task--completed" : "";  ?> '>
                         <td class='task__select'>
                           <label class='checkbox task__checkbox'>
-                            <input class='checkbox__input visually-hidden' type='checkbox'>
+                            <input class='checkbox__input visually-hidden' type='checkbox' checked>
                             <a href="/"><span class='checkbox__text'><?= $value['task']; ?></span></a>
                           </label>
                         </td>
