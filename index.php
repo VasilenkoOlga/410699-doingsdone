@@ -49,6 +49,19 @@ $task_table = [
 		"realization" => false
     ],
 ];
+
+function count_task($task_table, $category){
+  $count=0;
+  if ($category=='Все'){
+    $count=count($task_table);
+  } else {
+    foreach ($task_table as $val){
+      if($val['category']==$category)
+      $count++;
+    } 
+  }
+  return $count;
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru"> 
@@ -96,7 +109,7 @@ $task_table = [
                         <?php foreach ($projects as $key => $val): ?>
                         <li class="main-navigation__list-item <? if ($key==0) echo 'main-navigation__list-item--active'; ?>">
                             <a class="main-navigation__list-item-link" href="#"><?=$val;?></a>
-                            <span class="main-navigation__list-item-count"><?=$key?></span>
+                            <span class="main-navigation__list-item-count"><? print(count_task($task_table, $val));  ?></span>
                         </li>
                       
                       <!--  <li class="main-navigation__list-item">
@@ -247,5 +260,8 @@ $task_table = [
     </div>
 </footer>
 
+
+
 </body>
 </html>
+
