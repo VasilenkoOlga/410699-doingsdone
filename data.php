@@ -1,6 +1,4 @@
 <?php
-require_once('function.php');
-
 // показывать или нет выполненные задачи
 $show_complete_tasks = rand(0, 1);
 
@@ -51,23 +49,4 @@ $task_table = [
 		"realization" => false
     ],
 ];
-
-function count_task($task_table, $category){
-  $count=0;
-  if ($category=='Все'){
-    $count=count($task_table);
-  } else {
-    foreach ($task_table as $val){
-      if($val['category']==$category)
-      $count++;
-    } 
-  }
-  return $count;
-}
-
-$page = template('templates/main.php',['show_complete_tasks' => $show_complete_tasks ,'task_table' => $task_table]);
-
-$layout = template('templates/layout.php',['content' => $page, 'title' => 'Дела в порядке','usre_name' => 'Константин', 'projects' => $projects, 'task_table' => $task_table]);
- 
-print($layout);
 ?>
