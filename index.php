@@ -15,8 +15,8 @@ $projects = [
 
 $task_table = [
     [ 
-        "task" => "Собеседование в IT компании",
-		"date" => "11.02.2018",
+    "task" => "Собеседование в IT компании",
+		"date" => "01.06.2018",
 		"category" => "$projects[3]",
 		"realization" => false
     ],
@@ -40,7 +40,9 @@ $task_table = [
     ],
 	[ 
 		"task" => "Купить корм для кота",
+
 		"date" => "22.04.2018",
+
 		"category" => "$projects[4]",
 		"realization" => false
     ],
