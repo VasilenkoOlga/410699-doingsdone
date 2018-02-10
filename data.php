@@ -1,6 +1,4 @@
 <?php
-require_once('function.php');
-
 // показывать или нет выполненные задачи
 $show_complete_tasks = rand(0, 1);
 
@@ -16,7 +14,7 @@ $projects = [
 $task_table = [
     [ 
         "task" => "Собеседование в IT компании",
-		"date" => "11.02.2018",
+		"date" => "01.06.2018",
 		"category" => "$projects[3]",
 		"realization" => false
     ],
@@ -40,34 +38,15 @@ $task_table = [
     ],
 	[ 
 		"task" => "Купить корм для кота",
-		"date" => "22.04.2018",
+		"date" => "Нет",
 		"category" => "$projects[4]",
 		"realization" => false
     ],
 	[ 
 		"task" => "Заказать пиццу",
-		"date" => "11.02.2018",
+		"date" => "Нет",
 		"category" => "$projects[4]",
 		"realization" => false
     ],
 ];
-
-function count_task($task_table, $category){
-  $count=0;
-  if ($category=='Все'){
-    $count=count($task_table);
-  } else {
-    foreach ($task_table as $val){
-      if($val['category']==$category)
-      $count++;
-    } 
-  }
-  return $count;
-}
-
-$page = template('templates/main.php',['show_complete_tasks' => $show_complete_tasks ,'task_table' => $task_table]);
-
-$layout = template('templates/layout.php',['content' => $page, 'title' => 'Дела в порядке','usre_name' => 'Константин', 'projects' => $projects, 'task_table' => $task_table]);
- 
-print($layout);
 ?>
