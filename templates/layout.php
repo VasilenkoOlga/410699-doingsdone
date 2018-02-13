@@ -19,7 +19,7 @@
             </a>
 
             <div class="main-header__side">
-                <a class="main-header__side-item button button--plus" href="#">Добавить задачу</a>
+                <a class="main-header__side-item button button--plus" href="/templates/add.html">Добавить задачу</a>
 
                 <div class="main-header__side-item user-menu">
                     <div class="user-menu__image">
@@ -43,7 +43,7 @@
                     <ul class="main-navigation__list">
                         <?php foreach ($projects as $key => $val): ?>
                         <li class="main-navigation__list-item <? if ($key==0) echo 'main-navigation__list-item--active'; ?>">
-                            <a class="main-navigation__list-item-link" href="#"><?=$val;?></a>
+                            <a class="main-navigation__list-item-link" href="index.php<?= ($key==0) ? "" : "?id=$key"; ?>"><?=$val;?></a>
                             <span class="main-navigation__list-item-count"><? print(count_task($task_table, $val));  ?></span>
                       </li>
                       <?php endforeach; ?>

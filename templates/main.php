@@ -32,7 +32,6 @@
                     <?php foreach ($task_table as $key => $value): ?>
                       <tr class='tasks__item task <?= ($value['realization']==1) ? "task--completed" : ""; ?>
                            <?= time_to_task($value["date"]) ? "task--important" : "";  ?> '>
-
                         <td class='task__select'>
                           <label class='checkbox task__checkbox'>
                             <input class='checkbox__input visually-hidden' type='checkbox' <?= ($value['realization']==1) ? "checked" : "";  ?>>
