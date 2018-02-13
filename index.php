@@ -4,6 +4,12 @@ require_once('function.php');
 // показывать или нет выполненные задачи
 $show_complete_tasks = rand(0, 1);
 
+<?php
+require_once('function.php');
+
+// показывать или нет выполненные задачи
+$show_complete_tasks = rand(0, 1);
+
 $projects = [
 	"Все", 
 	"Входящие", 
