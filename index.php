@@ -83,27 +83,29 @@ elseif ($_SERVER['REQUEST_METHOD'] == "POST") {
   if(count($errors)){
     $page = template('templates/add.php', ['projects' => $projects, 'errors' => $errors]);
     $overlay = 'overlay';
-  }
+  }else {
   if (empty($_POST["date"])) {
     $form_date = null;
   } else {
-    $format_date = date("d.m.Y", strtotime($_POST["date"]));
+    $form_date = date("d.m.Y", strtotime($_POST["date"]));
   }
-  if (isset($_FILES['name'])) {
-    $file_name = $_FILES['name'];
-    $file_path = _DIR_ . '/uploads/';
-    $file_url = '/uploads/' . $file_name;
-    $uploaded_file = move_uploaded_file($_FILES['tmp_name'], $file_path . $file_name);
+  if (isset($_FILES["preview"]["name"])) {
+    $file_name = $_FILES["preview"]["name"];
+    $file_path = 'uploads/';
+    $file_url = 'uploads/' . $file_name;
+    $uploaded_file = move_uploaded_file($_FILES["preview"]['tmp_name'], $file_path . $file_name);
   }
   
   array_unshift($task_table, [
     "task" => $_POST["name"],
     "date" => $form_date,
     "category" => $_POST["project"],
-    "file_name" => $_FILES["preview"],
+    "file_name" => $_FILES["preview"]["name"],
     "file_url" => $uploaded_file,
     "realization" => false
   ]);
+  $page = template('templates/main.php',['show_complete_tasks' => $show_complete_tasks ,'task_table' => $task_table]);
+  }
 }
 
 elseif(isset($_GET['id'])) {
