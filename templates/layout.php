@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body><!--class="overlay"-->
+
+<body class="<?=$overlay; ?>"><!--class="overlay"-->
+
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
@@ -19,7 +21,8 @@
             </a>
 
             <div class="main-header__side">
-                <a class="main-header__side-item button button--plus" href="/templates/add.html">Добавить задачу</a>
+                <a class="main-header__side-item button button--plus" href="index.php?add">Добавить задачу</a>
+
 
                 <div class="main-header__side-item user-menu">
                     <div class="user-menu__image">
