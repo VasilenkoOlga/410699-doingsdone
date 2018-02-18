@@ -2,7 +2,9 @@
 require_once('function.php');
 
 // показывать или нет выполненные задачи
-$show_complete_tasks = rand(0, 1);
+
+$show_complete_tasks = 1;
+
 
 $projects = [
 	"Все", 
@@ -36,7 +38,7 @@ $task_table = [
 		"task" => "Встреча с другом",
 		"date" => "22.04.2018",
 		"category" => "$projects[1]",
-		"realization" => false
+		"realization" => true
     ],
 	[ 
 		"task" => "Купить корм для кота",
@@ -64,6 +66,18 @@ function count_task($task_table, $category){
   }
   return $count;
 }
+
+
+if (isset($_GET["show_completed"])) {
+  if(isset($_COOKIE["showcompl"])) {
+    $show_complete_tasks = ($_COOKIE["showcompl"]== 1) ? 0 : 1;
+  }
+  setcookie("showcompl", $show_complete_tasks, strtotime("+30 days"), "/");
+  header("Location: /");
+}
+
+$showCompleted = (isset($_COOKIE["showcompl"])) ? $_COOKIE["showcompl"] : "";
+
 
 $errors = [];
 $overlay = '';
@@ -104,7 +118,8 @@ elseif ($_SERVER['REQUEST_METHOD'] == "POST") {
     "file_url" => $uploaded_file,
     "realization" => false
   ]);
-  $page = template('templates/main.php',['show_complete_tasks' => $show_complete_tasks ,'task_table' => $task_table]);
+
+  $page = template('templates/main.php',['showCompleted' => $showCompleted, 'show_complete_tasks' => $show_complete_tasks ,'task_table' => $task_table]);
   }
 }
 
@@ -117,7 +132,7 @@ elseif(isset($_GET['id'])) {
         array_push($task_category, $val);
       }
     }
-    $page = template('templates/main.php',['show_complete_tasks' => $show_complete_tasks ,'task_table' => $task_category]);
+    $page = template('templates/main.php',['showCompleted' => $showCompleted,'show_complete_tasks' => $show_complete_tasks ,'task_table' => $task_category]);
   }
   else {
     http_response_code(404);
@@ -125,7 +140,7 @@ elseif(isset($_GET['id'])) {
   }
 }
 else {
-  $page = template('templates/main.php',['show_complete_tasks' => $show_complete_tasks ,'task_table' => $task_table]);
+  $page = template('templates/main.php',['showCompleted' => $showCompleted,'show_complete_tasks' => $show_complete_tasks ,'task_table' => $task_table]);
 }
 
 $layout = template('templates/layout.php',['overlay' => $overlay, 'content' => $page, 'title' => 'Дела в порядке','usre_name' => 'Константин', 'projects' => $projects, 'task_table' => $task_table]);
