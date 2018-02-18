@@ -2,7 +2,9 @@
 require_once('function.php');
 
 // показывать или нет выполненные задачи
+
 $show_complete_tasks = 1;
+
 
 $projects = [
 	"Все", 
@@ -65,6 +67,7 @@ function count_task($task_table, $category){
   return $count;
 }
 
+
 if (isset($_GET["show_completed"])) {
   if(isset($_COOKIE["showcompl"])) {
     $show_complete_tasks = ($_COOKIE["showcompl"]== 1) ? 0 : 1;
@@ -74,6 +77,7 @@ if (isset($_GET["show_completed"])) {
 }
 
 $showCompleted = (isset($_COOKIE["showcompl"])) ? $_COOKIE["showcompl"] : "";
+
 
 $errors = [];
 $overlay = '';
@@ -114,9 +118,11 @@ elseif ($_SERVER['REQUEST_METHOD'] == "POST") {
     "file_url" => $uploaded_file,
     "realization" => false
   ]);
+
   $page = template('templates/main.php',['showCompleted' => $showCompleted, 'show_complete_tasks' => $show_complete_tasks ,'task_table' => $task_table]);
   }
 }
+
 elseif(isset($_GET['id'])) {
   $task_category = [];
   $category_id = intval($_GET['id']);
