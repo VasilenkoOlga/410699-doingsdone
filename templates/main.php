@@ -27,7 +27,7 @@
 
                 <table class="tasks">
                     <?php foreach ($task_table as $key => $value): ?>
-                    <?php if(($showCompleted == 1 && $value['realization'] == true ) || $value['realization'] == false  && $showCompleted == 0): ?>
+                    <?php if(($showCompleted == 1 && $value['realization'] === true ) || ($showCompleted == 0 && $value['realization'] === false)): ?>
                       <tr class='tasks__item task <?= ($value['realization']) ? "task--completed" : ""; ?>
                           <?= time_to_task($value["date"]) ? "task--important" : "";  ?> '>
                         <td class='task__select'>
@@ -42,16 +42,5 @@
                       </tr>
                     <?php endif; ?>
                     <? endforeach; ?>
-                  <?php if ($showCompleted): ?>
-                  <tr class="tasks__item task task--completed">
-                    <td class="task__select">
-                      <label class="checkbox task__checkbox">
-                          <input class="checkbox__input visually-hidden" type="checkbox" checked>
-                          <span class="checkbox__text">Записаться на интенсив "Базовый PHP"</span>
-                      </label>
-                    </td>
-                    <td class="task__date">10.04.2017</td>
-                    <td class="task__controls"></td>
-                  </tr>
-                  <?php endif; ?>
+                  
                 </table>
