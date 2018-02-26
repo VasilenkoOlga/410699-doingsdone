@@ -80,6 +80,7 @@ $errors = [];
 $overlay = '';
 $modal = NULL;
 $page = NULL;
+$user = NULL;
 $login_errors = [];
 
 session_start();
@@ -145,7 +146,7 @@ if (isset($_SESSION["user"])) {
   } else {
     $page = template('templates/main.php',['showCompleted' => $showCompleted,'show_complete_tasks' => $show_complete_tasks ,'task_table' => $task_table]);
   }
-
+  $user = $_SESSION['user'];
 } else { 
     if (isset($_GET["login"])) {
      $page = template('templates/guest.php', []); 
@@ -193,8 +194,6 @@ if (isset($_GET['logout'])) {
     $page = template('guest.php', []);
     header("Location:/index.php");
 }
-
-$user = $_SESSION['user']['name'];
 
 $layout = template('templates/layout.php',[
   'overlay' => $overlay, 
