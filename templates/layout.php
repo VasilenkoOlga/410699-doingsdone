@@ -8,7 +8,14 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class="<?=$overlay; ?>"><!--class="overlay"-->
+<!--<body class=" <//?=$overlay; ?> 
+             <//?= (isset($_SESSION["user"])) ? "" : "body-background";  ?>">-->
+  
+<body class="<?php if (!is_null($modal)): ?>overlay<?php endif; ?>
+             <?= (isset($_SESSION["user"])) ? "" : "body-background";  ?>
+             <?=$overlay; ?>
+">
+ 
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
@@ -17,7 +24,7 @@
             <a href="#">
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
             </a>
-
+            <?php if (isset($_SESSION["user"])) : ?>
             <div class="main-header__side">
                 <a class="main-header__side-item button button--plus" href="index.php?add">Добавить задачу</a>
 
@@ -27,34 +34,41 @@
                     </div>
 
                     <div class="user-menu__data">
-                        <p><?=$usre_name?></p>
+                        <p><?= $user ?></p>
 
-                        <a href="#">Выйти</a>
+                        <a href="?logout">Выйти</a>
                     </div>
                 </div>
             </div>
+          <?php else : ?>
+          <div class="main-header__side">
+          <a class="main-header__side-item button button--transparent" href="?login">Войти</a>
+        </div>
+          <?php endif; ?>
         </header>
-
         <div class="content">
+          <?php if (isset($_SESSION["user"])) : ?>
             <section class="content__side">
                 <h2 class="content__side-heading">Проекты</h2>
 
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
                         <?php foreach ($projects as $key => $val): ?>
-                        <li class="main-navigation__list-item <? if ($key==0) echo 'main-navigation__list-item--active'; ?>">
+                            <li class="main-navigation__list-item <? if ($key == $_GET['id']) echo 'main-navigation__list-item--active'; ?>">
                             <a class="main-navigation__list-item-link" href="index.php<?= ($key==0) ? "" : "?id=$key"; ?>"><?=$val;?></a>
                             <span class="main-navigation__list-item-count"><? print(count_task($task_table, $val));  ?></span>
                       </li>
                       <?php endforeach; ?>
                     </ul>
                 </nav>
-
+                
                 <a class="button button--transparent button--plus content__side-button" href="#">Добавить проект</a>
             </section>
+          <?php endif; ?>
 
             <main class="content__main">
-                <?=$content;?>
+              <?=$content;?>
+              <?=$modal;?>
             </main>
         </div>
     </div>
