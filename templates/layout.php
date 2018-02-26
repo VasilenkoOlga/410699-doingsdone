@@ -19,7 +19,7 @@
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
-    <div class="container container--with-sidebar">
+    <div class="container <?php if (isset($_SESSION["user"])) echo  'container--with-sidebar';?> ">
         <header class="main-header">
             <a href="#">
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
@@ -34,7 +34,7 @@
                     </div>
 
                     <div class="user-menu__data">
-                        <p><?= $user ?></p>
+                        <p><?= $user['name'] ?></p>
 
                         <a href="?logout">Выйти</a>
                     </div>
