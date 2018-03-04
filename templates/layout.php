@@ -7,19 +7,17 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-
-<!--<body class=" <//?=$overlay; ?> 
-             <//?= (isset($_SESSION["user"])) ? "" : "body-background";  ?>">-->
   
 <body class="<?php if (!is_null($modal)): ?>overlay<?php endif; ?>
-             <?= (isset($_SESSION["user"])) ? "" : "body-background";  ?>
+             <?= (isset($_SESSION["user"]) || isset($_GET['register'])) ? "" : "body-background";  ?>
              <?=$overlay; ?>
 ">
  
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
-    <div class="container <?php if (isset($_SESSION["user"])) echo  'container--with-sidebar';?> ">
+  
+    <div class="container <?php if (isset($_SESSION["user"]) || isset($_GET['register'])) echo  'container--with-sidebar';?> ">
         <header class="main-header">
             <a href="#">
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
@@ -40,32 +38,52 @@
                     </div>
                 </div>
             </div>
-          <?php else : ?>
+          <?php else: ?>
+          
+          <?php if(!isset($_GET['register'])) : ?>
           <div class="main-header__side">
           <a class="main-header__side-item button button--transparent" href="?login">Войти</a>
         </div>
           <?php endif; ?>
+          <?php endif; ?>
         </header>
         <div class="content">
-          <?php if (isset($_SESSION["user"])) : ?>
+          <?php if (isset($_SESSION["user"])) { ?>
             <section class="content__side">
                 <h2 class="content__side-heading">Проекты</h2>
-
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
-                        <?php foreach ($projects as $key => $val): ?>
-                            <li class="main-navigation__list-item <? if ($key == $_GET['id']) echo 'main-navigation__list-item--active'; ?>">
-                            <a class="main-navigation__list-item-link" href="index.php<?= ($key==0) ? "" : "?id=$key"; ?>"><?=$val;?></a>
-                            <span class="main-navigation__list-item-count"><? print(count_task($task_table, $val));  ?></span>
+                      <li class="main-navigation__list-item <? if (!isset($_GET['id'])) { echo 'main-navigation__list-item--active'; } ?>">
+                        <a class="main-navigation__list-item-link" href="index.php">Все</a>
+                        <?php
+                        $allTasksCount = 0;
+                        foreach ($projects as $project) {
+                          $allTasksCount += $project['tasks_count'];
+                        }
+                        ?>
+                        <span class="main-navigation__list-item-count"><?=$allTasksCount;?></span>
                       </li>
+                      
+                      <?php foreach ($projects as $project): ?>
+                        <li class="main-navigation__list-item <? if ($_GET['id'] === $project['id']) echo 'main-navigation__list-item--active'; ?>">
+                          <a class="main-navigation__list-item-link" href="index.php?id=<?=$project['id'];?>"><?=$project['name'];?></a>
+                          <span class="main-navigation__list-item-count"><?=$project['tasks_count'];?></span>
+                        </li>
                       <?php endforeach; ?>
                     </ul>
                 </nav>
                 
-                <a class="button button--transparent button--plus content__side-button" href="#">Добавить проект</a>
+                <a class="button button--transparent button--plus content__side-button" href="?modal-project">Добавить проект</a>
+              
             </section>
-          <?php endif; ?>
+          <?php } elseif (isset($_GET['register'])) { ?>
+            <section class="content__side">
 
+          <p class="content__side-info">Если у вас уже есть аккаунт, авторизуйтесь на сайте</p>
+
+          <a class="button button--transparent content__side-button" href="#">Войти</a>
+            </section>
+          <?php } ?>
             <main class="content__main">
               <?=$content;?>
               <?=$modal;?>
@@ -81,9 +99,9 @@
 
             <p>Веб-приложение для удобного ведения списка дел.</p>
         </div>
-
-        <a class="main-footer__button button button--plus">Добавить задачу</a>
-
+        <?php if (isset($_SESSION["user"])) : ?>
+        <a class="main-footer__button button button--plus" href="index.php?add">Добавить задачу</a>
+        <?php endif; ?>
         <div class="main-footer__social social">
             <span class="visually-hidden">Мы в соцсетях:</span>
             <a class="social__link social__link--facebook" href="#">Facebook

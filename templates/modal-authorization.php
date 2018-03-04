@@ -1,9 +1,8 @@
 <div class="modal">
-  <button class="modal__close" type="button" name="button">Закрыть</button>
+  <a href="index.php" class="modal__close" >Закрыть</a>
 
   <h2 class="modal__heading">Вход на сайт</h2>
   
-  <!--<form class="form" action="?login" method="post">-->
   <form class="form" action="index.php?login" method="post">
     <div class="form__row">
       <label class="form__label" for="email">E-mail <sup>*</sup></label>
