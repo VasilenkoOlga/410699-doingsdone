@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="user-menu__data">
-                        <p><?= $user['name'] ?></p>
+                        <p><?= htmlspecialchars($user['name']) ?></p>
 
                         <a href="?logout">Выйти</a>
                     </div>
@@ -66,7 +66,7 @@
                       
                       <?php foreach ($projects as $project): ?>
                         <li class="main-navigation__list-item <? if ($_GET['id'] === $project['id']) echo 'main-navigation__list-item--active'; ?>">
-                          <a class="main-navigation__list-item-link" href="index.php?id=<?=$project['id'];?>"><?=$project['name'];?></a>
+                          <a class="main-navigation__list-item-link" href="index.php?id=<?=$project['id'];?>"><?=htmlspecialchars($project['name']);?></a>
                           <span class="main-navigation__list-item-count"><?=$project['tasks_count'];?></span>
                         </li>
                       <?php endforeach; ?>

@@ -27,7 +27,7 @@
         <? foreach($projects as $val): 
         if ($val != "Все"){
         ?>
-        <option value="<?= $val['id']; ?>"><?= $val['name']; ?></option>
+        <option value="<?= $val['id']; ?>"><?= htmlspecialchars($val['name']); ?></option>
         <? } endforeach; ?>
       </select>
     </div>

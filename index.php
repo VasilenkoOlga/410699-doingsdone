@@ -35,12 +35,13 @@ if (isset($_SESSION["user"])) {
   if (isset($_GET['complete_task_id'])) {
     $taskId = $_GET['complete_task_id'];
     
+    $currentUserId = $_SESSION['user']['id'];
     $query = "SELECT * FROM task_table WHERE `id` = '" . $taskId . "'";
     $result = mysqli_query($link, $query);
     $task = mysqli_fetch_assoc($result);
-    
-    $taskDateDone = $task['date_done'];
-    
+    $taskAuthor = $task['user_id'];
+    if ($currentUserId == $taskAuthor)
+    {    $taskDateDone = $task['date_done'];
     if ($taskDateDone !== NULL) {
       $query = "UPDATE task_table SET date_done = NULL WHERE id = '" . $taskId . "'";
     } else {
@@ -48,12 +49,13 @@ if (isset($_SESSION["user"])) {
     }
     $result = mysqli_query($link, $query);
   }
+  }
   
   if (intval($_SESSION['user']['id']) > 0) {
     $projects = getUserProjects($link, $_SESSION['user']['id']);
     $task_table = getUserTasks($link, $_SESSION['user']['id']);
   }
-
+  
   if (isset($_GET['modal-project'])) {
   
     if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["add_project"])) {
@@ -67,6 +69,7 @@ if (isset($_SESSION["user"])) {
         $sql = 'INSERT INTO projects (name, user_id) VALUES(?, ?)';
         $stmt = db_get_prepare_stmt($link, $sql, [$_POST['name'], $_SESSION['user']['id']]);
         mysqli_stmt_execute($stmt);
+        header("Location:/index.php");
       }
     } else {
       $modal = template("templates/modal-project.php", []);
@@ -87,18 +90,18 @@ if (isset($_SESSION["user"])) {
       $errors += ['project'=> 'Укажите проект!'];  
     }
     
-    if (time() > strtotime($_POST["date_deadline"])){
+    if ((!empty($_POST["date_deadline"])) & (strtotime($_POST["date_deadline"]) < time())){
       $errors += ['date_deadline'=> 'Укажите верную дату!'];  
     }
-    
+
     if (count($errors)) {
       $page = template('templates/add.php', ['projects' => $projects, 'errors' => $errors]);
       $overlay = 'overlay';
     } else {
       if (empty($_POST["date_deadline"])) {
-        $form_date = null;
+        $form_date = date("Y-m-d 20:00", strtotime('+1 day'));
       } else {
-        
+
         $form_date = date("Y-m-d H:i:s", strtotime($_POST["date_deadline"]));
       }
       
@@ -229,7 +232,7 @@ if (isset($_GET['register'])) {
 if (isset($_GET['logout'])) {
     session_unset();
     $page = template('guest.php', []);
-    header("Location:/index.php");
+    header("Location: index.php");
 }
 
 $layout = template('templates/layout.php',[

@@ -40,7 +40,7 @@
                             <input class='checkbox__input visually-hidden' type='checkbox' <?= ($task['date_done'] !== NULL) ? 'checked' : ""; ?> >
                             <a href="?complete_task_id=<?=$task['id'];?>">
                               <input class="checkbox__input visually-hidden" type="checkbox"<? if ($task['date_done'] !== NULL) { ?> checked<? } ?>>
-                              <span class='checkbox__text'><?= $task['task']; ?></span>
+                              <span class='checkbox__text'><?= htmlspecialchars($task['task']); ?></span>
                             </a>
                           </label>
                         </td>

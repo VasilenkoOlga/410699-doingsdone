@@ -102,11 +102,11 @@ function getUserTasks($link, $userId, $categoryId = false) {
   
   if (isset($_REQUEST['tasks_filter'])) {
     if ($_REQUEST['tasks_filter'] == 'today') {
-      $tasksQuery = "SELECT * FROM task_table WHERE date_deadline = CURDATE()";
+      $tasksQuery = "SELECT * FROM task_table WHERE date_deadline = CURDATE() AND `user_id` = '" . $userId . "'";
     } elseif ($_REQUEST['tasks_filter'] == 'tomorrow') {
-      $tasksQuery = "SELECT * FROM task_table WHERE date_deadline = CURDATE() + 1";
+      $tasksQuery = "SELECT * FROM task_table WHERE date_deadline = CURDATE() + 1 AND `user_id` = '" . $userId . "'";
     } elseif ($_REQUEST['tasks_filter'] == 'old') {
-$tasksQuery = "SELECT * FROM task_table WHERE date_deadline < CURDATE()";
+      $tasksQuery = "SELECT * FROM task_table WHERE date_deadline < CURDATE() AND `user_id` = '" . $userId . "'";
     }
   } else {
     // выбираем все задачи, доступные пользователю
@@ -118,6 +118,5 @@ $tasksQuery = "SELECT * FROM task_table WHERE date_deadline < CURDATE()";
   if ($tasksResult !== false) {
     $tasks = mysqli_fetch_all($tasksResult, MYSQLI_ASSOC);
   }
-  
   return $tasks;
 }
