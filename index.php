@@ -89,20 +89,17 @@ if (isset($_SESSION["user"])) {
     if (empty($task["project"])){
       $errors += ['project'=> 'Укажите проект!'];  
     }
-    
-    if ((!empty($_POST["date_deadline"])) & (strtotime($_POST["date_deadline"]) < time())){
-      $errors += ['date_deadline'=> 'Укажите верную дату!'];  
-    }
 
     if (count($errors)) {
       $page = template('templates/add.php', ['projects' => $projects, 'errors' => $errors]);
       $overlay = 'overlay';
     } else {
       if (empty($_POST["date_deadline"])) {
-        $form_date = date("Y-m-d 20:00", strtotime('+1 day'));
+        $form_date = null;
+      $sql = 'INSERT INTO task_table (date_add, task, date_deadline, user_id, category) VALUES(NOW(), ?, null, ?, ?)';
       } else {
-
         $form_date = date("Y-m-d H:i:s", strtotime($_POST["date_deadline"]));
+        $sql = 'INSERT INTO task_table (date_add, task, date_deadline, user_id, category) VALUES(NOW(), ?, ?, ?, ?)';
       }
       
       if (isset($_FILES["preview"]["name"])) {
@@ -111,8 +108,6 @@ if (isset($_SESSION["user"])) {
         $file_url = 'uploads/' . $file_name;
         $uploaded_file = move_uploaded_file($_FILES["preview"]['tmp_name'], $file_path . $file_name);
       }
-      
-      $sql = 'INSERT INTO task_table (date_add, task, date_deadline, user_id, category) VALUES(NOW(), ?, ?, ?, ?)';
       $stmt = db_get_prepare_stmt($link, $sql, [
         $task['name'],
         $form_date,

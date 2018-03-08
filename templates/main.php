@@ -44,7 +44,9 @@
                             </a>
                           </label>
                         </td>
-                        <td class='task__date'><?= date('d.m.Y', strtotime($task['date_deadline'])); ?></td>
+                        <td class='task__date'>
+                          <?= ($task['date_deadline'] !== NULL) ? date('d.m.Y', strtotime($task['date_deadline'])) : ""; ?>
+                        </td>
                         <td class='task__controls'>
                         </td>
                       </tr>

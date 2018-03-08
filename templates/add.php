@@ -34,11 +34,6 @@
 
     <div class="form__row">
       <label class="form__label" for="date">Дата выполнения
-      
-      <? if (isset($errors['date_deadline'])){?>
-        <p class="form__message"><?= $errors['date_deadline'];  ?></p>
-      <? } ?>
-      
       </label>
         
       <input class="form__input form__input--date" type="date" name="date_deadline" id="date" value="<?= (isset($_POST["date"])) ? $_POST["date"] : ""; ?>" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
